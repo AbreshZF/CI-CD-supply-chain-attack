@@ -1,12 +1,33 @@
 name: CI Pipeline
 
-on: [push]
+on:
+  push:
+  pull_request:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
+    env:
+      APP_SECRET: ${{ secrets.APP.SECRET}}
+
     steps:
-      - uses: actions/checkout@v3
-      - run: pip install -r requirements.txt
-      - run: bash scripts/build.sh
-      - run: bash scripts/deploy.sh
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build step (unsafe)
+        run: bash scripts/build.sh
+
+      - name: Upload build artifact (untrusted)
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: app.py
+
+      - name: Download build artifact (no integrity check)
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
+
+      - name: Deploy to production (no approval)
+        run: bash scripts/deploy.sh
