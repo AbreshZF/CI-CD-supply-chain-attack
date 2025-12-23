@@ -24,8 +24,8 @@ jobs:
           chmod +x ./scripts/build.sh
           ./scripts/build.sh
           # Pass secret into Docker (Vulnerability 1: Secret in layers)
-          docker build --build-arg APP_SECRET=$MY_SECRET -t my-app .
-          docker save my-app > app.tar
+          docker build --build-arg APP_SECRET=$MY_SECRET -t ci-cd .
+          docker save ci-cd > app.tar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
